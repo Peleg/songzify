@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body, a {
+        color: white;
+        font: 14px/1.4 Helvetica, arial, freesans, clean, sans-serif;
+      }
+      body, input {
+        text-align: center;
+      }
+      body {
+        padding: 10px;
+        background-color: #7B878C;
+        min-width: 300px;
+      }
+      form, ul {
+        width: 100%;
+      }
+      ul {
+        text-align: left;
+      }
+      input {
+        width: 70%;
+        height: 30px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        border: none;
+      }
+      input:focus {
+        outline: none;
+      }
+      input[type='submit'] {
+        cursor: pointer;
+      }
+      #songs {
+        display: none;
+      }
+    </style>
+    <script type="text/javascript" src="../js/popup/popup.js"></script>
+  </head>
+
+  <body>
+    <p>
+    Upvote a song on Songza and it will be automatically added to your
+    Spotify account. <br/> Or, add a song below.
+    </p>
+    <form id="form" action="#">
+      <input type="text" placeholder="Artist" />
+      <input type="text" placeholder="Song" />
+      <input type="submit" />
+    </form>
+    <a href="#" id="songs-toggle">Show songs</a>
+    <ul id="songs"></ul>
+  </body>
+</html>
