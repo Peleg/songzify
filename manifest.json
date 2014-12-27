@@ -1,0 +1,58 @@
+{
+  "name": "Songzify",
+  "version": "1.0",
+  "description": "Adds your favorite Songza songs to Spotify!",
+  "background": {
+    "scripts": ["config.js", "js/background/util.js", "js/background/auth.js",
+    "js/background/hotkey.js", "js/background/spotify.js", "js/background/songzify.js"],
+    "persistent": true
+  },
+  "browser_action" :
+  {
+    "default_icon" : "assets/icon-19.png",
+    "default_popup" : "html/popup.html"
+  },
+  "permissions" : [
+    "tabs",
+    "declarativeContent",
+    "*://*.spotify.com/*",
+    "*://*.songza.com/*",
+    "*://songza.com/*"
+  ],
+  "icons" : {
+    "48" : "assets/icon-48.png",
+    "128" : "assets/icon-128.png"
+  },
+  "commands" : {
+    "play-pause" : {
+      "suggested_key": {
+        "default": "MediaPlayPause"
+      },
+      "description": "Play or pause the current track",
+      "global": true
+    },
+    "next-track": {
+      "suggested_key": {
+        "default": "MediaNextTrack"
+      },
+      "description": "Skip the current track",
+      "global": true
+    },
+    "thumb-up": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Thumbs up the current track",
+      "global": true
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.songza.com/*", "*://songza.com/*"],
+      "js": ["js/injected/injected.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "manifest_version": 2
+}
