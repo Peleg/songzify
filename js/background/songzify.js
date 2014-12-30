@@ -5,6 +5,7 @@
 // add desktop notifications
 // let users enter playlistId from popup. lookup is shitty
 // if song not found, try free form search!
+// dont allow dups
 //
 // tidy up code
 // add notification saying song has been added to spotify

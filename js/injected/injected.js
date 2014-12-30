@@ -3,9 +3,9 @@
   'use strict';
 
   var _selectors = {
-    thumbLink       : 'li.miniplayer-track-action.thumb-up > span',
-    songContainer   : '.fullplayer-info-track-title',
-    artistContainer : '.fullplayer-info-artist-name'
+    thumbLink       : 'li.miniplayer-track-action.thumb-up',
+    songContainer   : '.miniplayer-info-track-title',
+    artistContainer : '.miniplayer-info-artist-name'
   };
 
   d.addEventListener('DOMSubtreeModified', getThumb);
@@ -23,7 +23,7 @@
   function nowPlaying () {
     return {
       song   : d.querySelector(_selectors.songContainer).innerText,
-      artist : d.querySelector(_selectors.artistContainer).children[0].innerText,
+      artist : d.querySelector(_selectors.artistContainer).innerText.slice(3), // remove 'by '
       time   : +new Date()
     };
   }
