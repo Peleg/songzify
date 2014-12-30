@@ -81,29 +81,29 @@
 
   Auth.prototype.setRefreshToken = function (token) {
     return this.refreshToken = this.setLS('refreshToken', token);
-  }
+  };
 
   /**
    * PlaylistId
    */
   Auth.prototype.getPlaylistId = function () {
     return this.playlistId || (this.playlistId = this.getLS('playlistId'));
-  }
+  };
 
   Auth.prototype.setPlaylistId = function (token) {
     return this.playlistId = this.setLS('playlistId', token);
-  }
+  };
 
   /**
    * UserId
    */
   Auth.prototype.getUserId = function () {
     return this.userId || (this.userId = this.getLS('userId'));
-  }
+  };
 
   Auth.prototype.setUserId = function (token) {
     return this.userId = this.setLS('userId', token);
-  }
+  };
 
   /**
    * PROFILE DETAILS
@@ -180,25 +180,30 @@
    * opens a new tab with spotify's auth
    */
   Auth.prototype._requestAuth = function (cb) {
+    var _this = this;
     chrome.tabs.create({
       url: _spotifyAuthURI
+    }, function (tab) {
+      chrome.tabs.onUpdated.addListener(_this._callbackHandler.bind(_this, cb));
     });
-    chrome.tabs.onUpdated.addListener(this._callbackHandler.bind(this, cb));
   };
 
   /**
    * handles redirect back from spotify auth.
    */
+  var _called = false;
   Auth.prototype._callbackHandler = function (cb) {
     // get tab with this extension's url
     var _this = this;
     chrome.tabs.query({
       'url': _redirectURI + '?code=*'
     }, function(tabs) {
-      if (tabs && tabs.length) {
+      if (_called) return; // #remove seems to invoke before the handler is removed
+      if (tabs && tabs[0] && tabs[0].status === 'complete') {
+        _called = true;
+        chrome.tabs.onUpdated.removeListener(_this._callbackHandler.bind(_this, cb));
         var url = tabs[0].url;
         var code = url.slice(url.indexOf('code=') + 5);
-        chrome.tabs.onUpdated.removeListener(_this._callbackHandler.bind(_this, cb));
         chrome.tabs.remove(tabs[0].id);
         _this._requestTokens(code, cb);
       }

@@ -24,7 +24,7 @@
         cmd  : 'saveSong',
         data : data
       }, populateSongs);
-    }
+    };
   }
 
   function bindShowToggle () {
@@ -54,15 +54,15 @@
     if (!songs.tracks || !songs.tracks.length) return;
 
     var li;
-    var fragment = d.createDocumentFragment();
+    var fragment = d.createElement('ul');
 
     songs.tracks.forEach(function (song) {
       li = d.createElement('li');
-      li.innerText = song.artist + ' - ' + song.song
+      li.innerText = song.artist + ' - ' + song.song;
       fragment.appendChild(li);
     });
 
-    el.appendChild(fragment);
+    el.innerHTML = fragment.innerHTML;
   }
 
   w.onload = init;

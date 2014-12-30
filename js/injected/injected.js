@@ -1,21 +1,22 @@
-(function (d, w, thumbLink) {
+(function (d, w, newLink, link) {
 
   'use strict';
 
   var _selectors = {
-    thumbLink       : '.ui-icon-thumb-up',
+    thumbLink       : 'li.miniplayer-track-action.thumb-up > span',
     songContainer   : '.fullplayer-info-track-title',
     artistContainer : '.fullplayer-info-artist-name'
   };
 
   d.addEventListener('DOMSubtreeModified', getThumb);
 
-  function getThumb () {
-    thumbLink = d.querySelector(_selectors.thumbLink);
-    if (!thumbLink) return;
+  function getThumb (e) {
+    newLink = d.querySelector(_selectors.thumbLink);
+    if (!newLink) return;
 
-    d.removeEventListener('DOMSubtreeModified', getThumb);
-    thumbLink.addEventListener('click', logVote);
+    link && link.removeEventListener('click', logVote);
+    link = newLink;
+    link.addEventListener('click', logVote);
   }
 
   // can also get from page title

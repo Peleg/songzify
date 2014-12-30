@@ -9,7 +9,6 @@
     this.auth = auth;
     this.playlistId = auth.getPlaylistId();
     this.userId = auth.getUserId();
-    this._addTrackEP = _spotifyEP + 'users/' + this.userId + '/playlists/' + this.playlistId + '/tracks';
   }
 
   /**
@@ -32,8 +31,8 @@
           _this.addToPlaylist(song.uri, cb);
         });
       }
-    })
-  }
+    });
+  };
 
   /**
    * Gets song uri from spotify
@@ -44,17 +43,20 @@
             '&type=track' +
             '&limit=1';
     this.request('GET', _searchEP, {}, encodeURI(q), cb);
-  }
+  };
 
   Spotify.prototype.addToPlaylist = function (songURI, cb) {
+    var _addTrackEP = _spotifyEP + 'users/' +
+      this.auth.getUserId() + '/playlists/' +
+      this.auth.getPlaylistId() + '/tracks';
     var _this = this;
     var q = { uris: [songURI] };
 
-    this.request('POST', this._addTrackEP, {
+    this.request('POST', _addTrackEP, {
       'Authorization' : 'Bearer ' + this.auth.getAccessToken(),
       'Content-Type'  : 'application/json'
     }, JSON.stringify(q), cb);
-  }
+  };
 
   Spotify.prototype.addToLS = function (songData) {
     var songs = Util.getLS('songs', 'tracks') || [];
@@ -74,7 +76,7 @@
       responseJSON.error && responseJSON.error.message === 'The access token expired'
         ? _this.auth.signOut()
         : typeof cb === 'function' && cb(responseJSON);
-    }
+    };
     Util.request.apply(Util, args);
   };
 

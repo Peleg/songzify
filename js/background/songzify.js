@@ -1,11 +1,10 @@
 
 //
 // TODO:
-// bind injected clicks to document (upvotes not working when song changes)
 // upvote hotkey cmdshftU not working
 // add desktop notifications
-// figure out a fix for when accesstoken is expired w/o having to like the song again
-// when adding new song to list, dont append li's, replace them
+// let users enter playlistId from popup. lookup is shitty
+// if song not found, try free form search!
 //
 // tidy up code
 // add notification saying song has been added to spotify
